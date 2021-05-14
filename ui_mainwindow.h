@@ -87,7 +87,6 @@ public:
     QLineEdit *findCustomerPhoneNum;
     QPushButton *findCustomerSubmit;
     QLabel *findCustomerStatus;
-    QWidget *tab_3;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -269,6 +268,7 @@ public:
 
         addCustomerFlightId = new QLineEdit(verticalLayoutWidget_4);
         addCustomerFlightId->setObjectName(QString::fromUtf8("addCustomerFlightId"));
+        addCustomerFlightId->setMaxLength(10);
 
         gridLayout_2->addWidget(addCustomerFlightId, 0, 1, 1, 1);
 
@@ -351,9 +351,6 @@ public:
         verticalLayout_5->addWidget(findCustomerStatus);
 
         tabWidget->addTab(tab_2, QString());
-        tab_3 = new QWidget();
-        tab_3->setObjectName(QString::fromUtf8("tab_3"));
-        tabWidget->addTab(tab_3, QString());
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -408,7 +405,6 @@ public:
         findCustomerSubmit->setText(QCoreApplication::translate("MainWindow", "Submit", nullptr));
         findCustomerStatus->setText(QString());
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "Customers", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("MainWindow", "Tab 3", nullptr));
     } // retranslateUi
 
 };
