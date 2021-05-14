@@ -11,7 +11,7 @@ public:
     virtual ~EasySaveLoad() {}; // 1 of 3
     // we dont want or need these, so delete them:
     EasySaveLoad& operator=(const EasySaveLoad &rhs) = delete; // 2 of 3
-    EasySaveLoad(const EasySaveLoad &sal) = delete; // 3 of 3
+    EasySaveLoad(const EasySaveLoad &esl) = delete; // 3 of 3
 
 protected: // children can use these functions for convenience
     void writeByte(std::ofstream &fout, char c) const;
