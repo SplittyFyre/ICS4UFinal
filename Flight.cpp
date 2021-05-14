@@ -9,6 +9,24 @@ Flight::Flight(const std::string &id, int size) : id(id), size(size) {
     memset(seats, 0, sizeof(Customer*) * size);
 }
 
+Flight& Flight::operator=(const Flight &rhs) {
+    id = rhs.id;
+    size = rhs.size;
+
+    delete[] seats; // works even if its already null
+    seats = nullptr;
+
+    if (rhs.seats != nullptr) { // they actually initialized their stuff
+        seats = new Customer*[size];
+        memcpy(seats, rhs.seats, sizeof(Customer*) * size);
+    }
+
+    return *this;
+}
+Flight::Flight(const Flight &f) {
+    *this = f;
+}
+
 int Flight::compare(const Record *that) const {
     const Flight *f = dynamic_cast<const Flight*>(that);
     if (id < f->id) return -1;
@@ -63,7 +81,7 @@ std::string Flight::toSortedString() const {
     return ss.str();
 }
 
-
+// a simple, recursive quickSort implementation
 void Flight::quickSort(Customer **arr, int lo, int hi) {
     if (lo < hi) {
         // partition array:

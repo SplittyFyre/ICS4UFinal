@@ -8,7 +8,7 @@ void RBTree::insert(Record *data) {
 void RBTree::erase(Record *data) {
     if (!contains(data)) return;
     if (!RBNode::isRed(root->left) && !RBNode::isRed(root->right))
-        root->colour = RED;
+        root->colour = RED; // red-black tree special case
     root = RBNode::erase(root, data);
     if (root) root->colour = BLACK;
 }

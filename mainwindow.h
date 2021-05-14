@@ -14,7 +14,10 @@ class MainWindow : public QMainWindow {
 
 public:
     MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    ~MainWindow(); // 1 of 3
+    // since this is a Qt object now, we definantely dont want these:
+    MainWindow& operator=(const MainWindow &rhs) = delete; // 2 of 3
+    MainWindow(const MainWindow &mw) = delete; // 3 of 3
 
 private:
     Ui::MainWindow *ui;

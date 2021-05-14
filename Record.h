@@ -10,7 +10,7 @@ class Record : public EasySaveLoad {
 public:
     Record() {};
     virtual ~Record() {}; // 1 of 3
-    // we dont want or need these, so delete them:
+    // we dont want or need these (this class doesnt even have any variables!), so delete them:
     Record& operator=(const Record &rhs) = delete; // 2 of 3
     Record(const Record &r) = delete; // 3 of 3
 

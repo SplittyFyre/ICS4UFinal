@@ -19,7 +19,7 @@ private: // even the constructors are private, which is good since this class sh
 
     RBNode(Record *data, int8_t colour) : data(data), colour(colour) {}
     ~RBNode(); // 1 of 3
-    // to avoid dangerous behaviour, disallow copying RBNodes:
+    // to avoid unwanted and possibly dangerous behaviour, disallow these:
     RBNode& operator=(const RBNode &rhs) = delete; // 2 of 3
     RBNode(const RBNode &rhs) = delete; // 3 of 3
 
