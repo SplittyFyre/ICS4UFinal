@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <fstream>
 
+// do some Qt stuff in the constructor
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
     this->setCentralWidget(ui->tabWidget);

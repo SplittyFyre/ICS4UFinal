@@ -73,8 +73,8 @@ RBNode* RBNode::insert(RBNode *h, Record *data) {
     if (h == nullptr) return new RBNode(data, RED); // recursion base case
     
     int comp = data->compare(h->data);
-    if (comp < 0) h->left = insert(h->left, data);
-    else if (comp > 0) h->right = insert(h->right, data);
+    if (comp < 0) h->left = insert(h->left, data); // bst: smaller values are to the left
+    else if (comp > 0) h->right = insert(h->right, data); // bst: larger values are to the right
     // else: this current node contains target key
 
     // insertion may have imbalanced tree, restore balance:
@@ -87,20 +87,23 @@ RBNode* RBNode::insert(RBNode *h, Record *data) {
 
 // erase Record from red-black tree, record must exist (that check is performed in RBTree)
 RBNode* RBNode::erase(RBNode *h, Record *data) {
-    if (data->compare(h->data) < 0) {
+    if (data->compare(h->data) < 0) { // bst: smaller values are to the left
         if (!isRed(h->left) && !isRed(h->left->left))
             h = moveRedLeft(h);
         h->left = erase(h->left, data);
     }
     else {
         if (isRed(h->left)) h = rotateRight(h);
-        if (data->compare(h->data) == 0 && h->right == nullptr) { // matching key found
-            delete h;
-            return nullptr;
+        if (data->compare(h->data) == 0 && h->right == nullptr) {
+            delete h; // h is the node to delete, and there are no children larger than it (h->right is null)
+            return nullptr; // node h has been deleted, so its parent marks it as null
         }
         if (!isRed(h->right) && !isRed(h->right->left))
             h = moveRedRight(h);
-        if (data->compare(h->data) == 0) {
+        if (data->compare(h->data) == 0) { // matching key found
+            // problem reduced to erasing the minimum from right subtree
+            // and then having h, the target, assume the identity of the removed node
+            // eraseMin() will maintain invariant as it climbs up the tree
             RBNode *tmp = findMin(h->right);
 
             delete h->data;
@@ -109,7 +112,7 @@ RBNode* RBNode::erase(RBNode *h, Record *data) {
 
             h->right = eraseMin(h->right);
         }
-        else h->right = erase(h->right, data);
+        else h->right = erase(h->right, data); // bst: larger values are to the right
     }
     return balance(h);
 }
@@ -119,8 +122,8 @@ RBNode* RBNode::find(RBNode *h, Record *data) {
     if (h == nullptr) return nullptr;
     int comp = data->compare(h->data);
     if (comp == 0) return h;
-    if (comp < 0) return find(h->left, data);
-    else return find(h->right, data);
+    if (comp < 0) return find(h->left, data); // bst: smaller values are to the left
+    else return find(h->right, data); // bst: larger values are to the right
 }
 
 // returns Node with smallest Record in subtree rooted at h
