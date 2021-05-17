@@ -5,7 +5,7 @@
 #include "EasySaveLoad.h"
 #include <fstream>
 
-class RBTree : EasySaveLoad {
+class RBTree : public EasySaveLoad {
 private:
     RBNode *root = nullptr;
 public:
