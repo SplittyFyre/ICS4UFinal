@@ -9,8 +9,11 @@ class Flight : public Record {
 private:
     std::string id;
     int size = 0;
-    Customer **seats = nullptr; // element is null if empty, otherwise points to customer who occupies it
-    // note that this class does not own the Customer*, so we don't delete them in the destructor
+
+    // seats is a dynamically-allocated array with each element being a pointer to a Customer class
+    // element seats[i] stores a pointer to the Customer object that occupies seat number i, or nullptr if that seat is unoccupied
+    // note that the Flight class does not 'own' these Customer objects, so we do not delete them in the destructor
+    Customer **seats = nullptr;
 
     static void quickSort(Customer **arr, int lo, int hi); // private helper function to sort Customers
 public:
@@ -26,10 +29,10 @@ public:
     Record* duplicateType() const override { return new Flight("arbitrary"); };
 
     inline int getSize() const { return size; }
-    inline Customer* getSeat(int i) const { return seats[i]; }
+    Customer* getSeat(int i) const;
     inline std::string getId() const { return id; }
 
-    inline void setSeat(int i, Customer *c) { seats[i] = c; }
+    void setSeat(int i, Customer *c);
     // don't want setters for id or size
 
     std::string toString(bool showOccupiedOnly) const;

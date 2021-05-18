@@ -4,7 +4,8 @@
 #include <fstream>
 #include <string>
 
-// a shell of a class which provides protected helper functions to make saving and loading more convenient
+// a base class without any data members which provides an interface for convenient read/write to disk
+// it provides the interface via protected functions which any derived class can use
 class EasySaveLoad {
 public:
     EasySaveLoad() {};
@@ -13,7 +14,7 @@ public:
     EasySaveLoad& operator=(const EasySaveLoad &rhs) = delete; // 2 of 3
     EasySaveLoad(const EasySaveLoad &esl) = delete; // 3 of 3
 
-protected: // children can use these functions for convenience
+protected: // derived classes can use these for convenience
     void writeByte(std::ofstream &fout, char c) const;
     void writeInt(std::ofstream &fout, int i) const;
     void writeString(std::ofstream &fout, const std::string &s) const;

@@ -4,13 +4,14 @@
 #include <fstream>
 #include "EasySaveLoad.h"
 
-// the abstract base Record class, anything inheriting from this can be stored in the RBTree
-// we also inherit EasySaveLoad to provide any derived classes with helpful helper functions
+// an abstract base class
+// any class which needs to be stored in RBTree/RBNode must inherit from Record and override its pure virtual functions
+// Record derives EasySaveLoad to enable convenient read/write to disk
 class Record : public EasySaveLoad {
 public:
     Record() {};
     virtual ~Record() {}; // 1 of 3
-    // we dont want or need these (this class doesnt even have any variables!), so delete them:
+    // we dont want or need these (this class doesnt even have any data members!), so delete them:
     Record& operator=(const Record &rhs) = delete; // 2 of 3
     Record(const Record &r) = delete; // 3 of 3
 
@@ -21,7 +22,7 @@ public:
     // used when loading objects in RBTree in order to create correct type
     virtual Record* duplicateType() const = 0;
 
-    // force any records to allow saving and loading
+    // Records can be saved to and loaded from disk
     virtual void save(std::ofstream &fout) const = 0;
     virtual void load(std::ifstream &fin) = 0;
 };

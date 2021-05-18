@@ -15,7 +15,7 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow(); // 1 of 3
-    // since this is a Qt object now, we definantely dont want these:
+    // since this is an object intended to interface with Qt, these are unneeded:
     MainWindow& operator=(const MainWindow &rhs) = delete; // 2 of 3
     MainWindow(const MainWindow &mw) = delete; // 3 of 3
 
@@ -25,7 +25,7 @@ private:
     RBTree flights, customers; // database objects
     bool showOccupiedOnly = false, sortByName = false; // flags for how flight information is printed
 
-    // helper functions for saving and loading:
+    // helper functions for saving and loading the database objects:
     void loadDataHelper(Record *r);
     void loadDataBases();
     void saveDataBases();

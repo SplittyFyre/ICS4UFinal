@@ -6,15 +6,21 @@
 
 class Customer : public Record {
 private:
-    std::string name, address, phonenum, flightid; // default initiated to empty string
+    // strings are default initialized to be empty strings
+    std::string name, address, phonenum;
+    std::string flightid;
     int seatnum = -1;
 public:
-    Customer() {} // default constructor
+    // default constructor leaves data members with the default values mentioned above
+    Customer() {}
+
     // this constructor makes a 'key' object, only taking enough information to allow the object to compare with others in RBTree
     Customer(const std::string &n, const std::string &pn) : name(n), phonenum(pn) {}
+
     // this is full constructor:
     Customer(const std::string &n, const std::string &a, const std::string &pn, const std::string &flightid, int seatnum) :
         name(n), address(a), phonenum(pn), flightid(flightid), seatnum(seatnum) {}
+
     // rule of three: none of the three (copy assign, copy construct, destruct) are needed
 
     inline void setName(const std::string &n) { name = n; }

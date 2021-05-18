@@ -5,8 +5,8 @@
 #include <QMessageBox>
 #include <fstream>
 
-// do some Qt stuff in the constructor
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
+    // do some Qt setup:
     ui->setupUi(this);
     this->setCentralWidget(ui->tabWidget);
 
@@ -21,7 +21,8 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-// called when user attempts to add flight, either add flight or show error
+// called when user attempts to add flight
+// checks for the validity of the operation (are all the required boxes filled? does the flight already exist?)
 void MainWindow::on_addFlightButton_released() {
     QLabel *status = findChild<QLabel*>("addFlightStatus");
     QString id = findChild<QLineEdit*>("flightIdEdit")->text().trimmed();
@@ -44,7 +45,8 @@ void MainWindow::on_addFlightButton_released() {
     findChild<QLineEdit*>("flightIdEdit")->clear();
 }
 
-// called when user attempts to remove flight, either removes flight or shows error
+// called when user attempts to remove flight
+// check for the validity of the operation (are all the required boxes filled? does the flight even exist?)
 void MainWindow::on_removeFlightButton_released() {
     QLabel *status = findChild<QLabel*>("removeFlightStatus");
     QString id = findChild<QLineEdit*>("rflightIdEdit")->text().trimmed();
@@ -74,7 +76,8 @@ void MainWindow::on_removeFlightButton_released() {
     findChild<QLineEdit*>("rflightIdEdit")->clear();
 }
 
-// return information regarding seats on requested flight when user presses button
+// called when user queries a flight
+// check for the validity of the operation and return information regarding seats on requested flight
 void MainWindow::on_queryFlightButton_released() {
     QPlainTextEdit *output = findChild<QPlainTextEdit*>("queryFlightOutput");
     QString id = findChild<QLineEdit*>("queryFlightIdEdit")->text().trimmed();
@@ -117,7 +120,7 @@ void MainWindow::on_cbSorted_stateChanged(int arg1) {
 }
 
 // called when user attempts to add a customer reservation
-// if valid reservation, add it, otherwise show an error
+// checks for validity of the operation
 void MainWindow::on_addCustomerSubmit_released() {
     QLabel *status = findChild<QLabel*>("addCustomerStatus");
     QString flightId = findChild<QLineEdit*>("addCustomerFlightId")->text().trimmed();
@@ -176,6 +179,8 @@ void MainWindow::on_addCustomerSubmit_released() {
     findChild<QLineEdit*>("addCustomerPhoneNum")->clear();
 }
 
+// called when user submits a query to find a customer's reservation
+// checks for the validity of the operations and shows a popup window which allows the user to delete the reservation
 void MainWindow::on_findCustomerSubmit_released() {
     QLabel *status = findChild<QLabel*>("findCustomerStatus");
 
@@ -226,7 +231,7 @@ void MainWindow::on_findCustomerSubmit_released() {
     }
 }
 
-
+// given a Record, cast it to a Customer and mark that Customer's seat as occupied
 void MainWindow::loadDataHelper(Record *r) {
     Customer *customer = dynamic_cast<Customer*>(r);
     Flight key(customer->getFlightId()); // another key object
@@ -239,14 +244,15 @@ void MainWindow::loadDataBases() {
     std::ifstream fin("data/data.dat");
     if (!fin.good()) return; // return if the file doesnt exist
 
-    Flight tmp("whatever"); // an arbitrary Flight instance, doesnt store anything, sole purpose is to make more of its own type
+    Flight tmp("whatever"); // an arbitrary Flight instance, doesnt store anything, ensures that RBTree::load creates the correct type
     flights.load(fin, &tmp);
 
-    Customer tmp2; // an arbitrary Customer instance, doesnt store anything, sole purpose is to make more of its own type
+    Customer tmp2; // an arbitrary Customer instance, doesnt store anything, ensures that RBTree::load creates the correct type
     customers.load(fin, &tmp2);
 
-    // as of right now, the problem is that the flights dont store any seat information
-    // since we cannot serialize pointer data, as such, as must iterate through all customers and update their corrosponding flight
+    // due to the difficulties of writing pointers to the disk, we do not save the 'seats' data member of the Flight class
+    // which means that at this point in the code, the flights dont contain the proper seating information
+    // we must go through all customers and update their corrosponding flight
     // note: this weird notation is a lambda expression which is necessary in order to pass a non-static member function as an argument
     customers.forEach([this](Record *r) { this->loadDataHelper(r); });
 }

@@ -1,8 +1,11 @@
 #include "RBNode.h"
 
+const int8_t RBNode::BLACK = 0;
+const int8_t RBNode::RED = 1;
+
 RBNode::~RBNode() { // delete left and right children as well as data
     // this works fine even if any of these pointers are null
-    // c++ standard guarantees delete is ignored if argument is null
+    // c++ standard guarantees delete is ignored if the argument is null
     delete left;
     delete right;
     delete data;
@@ -14,11 +17,14 @@ void RBNode::flipColours() {
     right->colour ^= 1;
 }
 bool RBNode::isRed(RBNode *node) {
-    if (!node) return false; // if node is null (since in red-black trees, null leafs are considered black)
+    if (!node) return false; // in red-black trees, null nodes are considered black
     return node->colour == RED;
 }
 
 // make a right-leaning link lean to the left
+// rotations are used in red-black trees to restore the invariant
+// since they can reposition nodes while preserving the bst ordering requirement
+// rotation visualized: https://www.codesdope.com/staticroot/images/ds/rb14.gif
 RBNode* RBNode::rotateLeft(RBNode *h) {
     RBNode *x = h->right;
     h->right = x->left;
@@ -37,8 +43,7 @@ RBNode* RBNode::rotateRight(RBNode *h) {
     return x;
 }
 
-// in certain cases where red-black tree becomes imbalanced,
-// this function restores the required properties
+// restore red-black tree invariant
 RBNode* RBNode::balance(RBNode *h) {
     if (isRed(h->right)) h = rotateLeft(h);
     if (isRed(h->left) && isRed(h->left->left)) h = rotateRight(h);
@@ -77,7 +82,7 @@ RBNode* RBNode::insert(RBNode *h, Record *data) {
     else if (comp > 0) h->right = insert(h->right, data); // bst: larger values are to the right
     // else: this current node contains target key
 
-    // insertion may have imbalanced tree, restore balance:
+    // insertion may have broken invariant tree, so restore invariant:
     if (isRed(h->right) && !isRed(h->left)) h = rotateLeft(h);
     if (isRed(h->left) && isRed(h->left->left)) h = rotateRight(h);
     if (isRed(h->left) && isRed(h->right)) h->flipColours();
@@ -118,6 +123,8 @@ RBNode* RBNode::erase(RBNode *h, Record *data) {
 }
 
 // returns Node holding matching Record in subtree rooted at h
+// note that the data argument points to an 'incomplete' Record which
+// contains only enough data to compare with other Records
 RBNode* RBNode::find(RBNode *h, Record *data) {
     if (h == nullptr) return nullptr;
     int comp = data->compare(h->data);
@@ -138,10 +145,10 @@ RBNode* RBNode::eraseMin(RBNode *h) {
         delete h;
         return nullptr;
     }
-    if (!isRed(h->left) && !isRed(h->left->left))
+    if (!isRed(h->left) && !isRed(h->left->left)) // prepare tree for traversal
         h = moveRedLeft(h);
-    h->left = eraseMin(h->left);
-    return balance(h);
+    h->left = eraseMin(h->left); // continued recursive traversal
+    return balance(h); // restore invariant
 }
 
 void RBNode::save(std::ofstream &fout) const {

@@ -2,15 +2,15 @@
 
 void RBTree::insert(Record *data) {
     root = RBNode::insert(root, data);
-    root->colour = BLACK;
+    root->colour = RBNode::BLACK;
 }
 
 void RBTree::erase(Record *data) {
     if (!contains(data)) return;
     if (!RBNode::isRed(root->left) && !RBNode::isRed(root->right))
-        root->colour = RED; // red-black tree special case
+        root->colour = RBNode::RED; // red-black tree special case
     root = RBNode::erase(root, data);
-    if (root) root->colour = BLACK;
+    if (root) root->colour = RBNode::BLACK;
 }
 
 bool RBTree::contains(Record *data) {
@@ -37,6 +37,7 @@ void RBTree::load(std::ifstream &fin, Record *type) {
     }
 }
 
+// simply call RBNode's forEach, provided the root exists
 void RBTree::forEach(const std::function<void(Record*)> &func) {
     if (root != nullptr)
         root->forEach(func);

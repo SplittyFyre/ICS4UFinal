@@ -13,9 +13,8 @@ void EasySaveLoad::writeInt(std::ofstream &fout, int i) const {
     fout.write(c, 4);
 }
 void EasySaveLoad::writeString(std::ofstream &fout, const std::string &s) const {
-    writeInt(fout, s.length()); // write length first
-    // write all chars in string excluding the \0 terminator:
-    fout.write(s.c_str(), s.length());
+    writeInt(fout, s.length()); // write length of string first
+    fout.write(s.c_str(), s.length()); // write every char in the string
 }
 
 char EasySaveLoad::readByte(std::ifstream &fin) {
@@ -23,7 +22,7 @@ char EasySaveLoad::readByte(std::ifstream &fin) {
     fin.read(&c, 1);
     return c;
 }
-// use bitwise operations to combine individual bytes to int:
+// use bitwise operations to combine individual bytes to an int:
 int EasySaveLoad::readInt(std::ifstream &fin) {
     char c[4];
     fin.read(c, 4);

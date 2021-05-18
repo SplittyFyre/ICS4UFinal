@@ -1,5 +1,6 @@
 #include "Flight.h"
 
+#include <iostream>
 #include <cstring>
 #include <sstream>
 #include <algorithm>
@@ -25,6 +26,21 @@ Flight& Flight::operator=(const Flight &rhs) {
 }
 Flight::Flight(const Flight &f) {
     *this = f;
+}
+
+// getSeat and setSeat offer encapsulation in the form of bounds checking
+Customer* Flight::getSeat(int i) const {
+    if (i < 0 || i >= size) { // bounds checking
+        std::cout << "Warning: attempted to access invalid seat index " << i << " on Flight of size " << size << std::endl;
+        return nullptr;
+    }
+    return seats[i];
+}
+void Flight::setSeat(int i, Customer *c) {
+    if (i < 0 || i >= size) { // bounds checking
+        std::cout << "Warning: attempted to set invalid seat index " << i << " on Flight of size " << size << std::endl;
+    }
+    else seats[i] = c;
 }
 
 int Flight::compare(const Record *that) const {
