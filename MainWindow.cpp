@@ -245,7 +245,7 @@ void MainWindow::loadDataHelper(Record *r) {
 
 void MainWindow::loadDataBases() {
     // load flights:
-    std::ifstream fin("data/data.dat");
+    std::ifstream fin("data/data.dat", std::ios::binary); // open data file and specify that we are reading binary
     if (!fin.good()) return; // return if the file doesnt exist
 
     Flight tmp("whatever"); // an arbitrary Flight instance, doesnt store anything, ensures that RBTree::load creates the correct type
@@ -262,7 +262,7 @@ void MainWindow::loadDataBases() {
 }
 
 void MainWindow::saveDataBases() {
-    std::ofstream fout("data/data.dat");
+    std::ofstream fout("data/data.dat", std::ios::binary); // open data file and specify that we are writing binary
     flights.save(fout);
     customers.save(fout);
 }
