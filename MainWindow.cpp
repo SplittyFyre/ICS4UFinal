@@ -263,6 +263,7 @@ void MainWindow::loadDataBases() {
 
 void MainWindow::saveDataBases() {
     std::ofstream fout("data/data.dat", std::ios::binary); // open data file and specify that we are writing binary
+    // opening the data file automatically overwrites the existing content on disk
     flights.save(fout);
     customers.save(fout);
 }
