@@ -20,7 +20,7 @@ public:
     MainWindow(const MainWindow &mw) = delete; // 3 of 3
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow *ui; // a special Qt class
 
     RBTree flights, customers; // database objects
     bool showOccupiedOnly = false, sortByName = false; // flags for how flight information is printed
