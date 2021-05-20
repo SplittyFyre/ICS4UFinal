@@ -25,7 +25,7 @@ Flight& Flight::operator=(const Flight &rhs) {
     return *this;
 }
 Flight::Flight(const Flight &f) {
-    *this = f;
+    *this = f; // overloaded assignment is able to properly initialize seats memory
 }
 
 // getSeat and setSeat offer encapsulation in the form of bounds checking
@@ -43,6 +43,7 @@ void Flight::setSeat(int i, Customer *c) {
     else seats[i] = c;
 }
 
+// return -1 if less than, 0 if equal, 1 if greater than
 int Flight::compare(const Record *that) const {
     const Flight *f = dynamic_cast<const Flight*>(that);
     if (id < f->id) return -1;

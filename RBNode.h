@@ -42,7 +42,7 @@ private: // even the constructors are private since this class should only be us
         - each node is coloured either red or black
         - the root node is always black
         - every path from the root to any leaf node must contain the same number of black nodes
-        - no two red nodes can be adjacent in the tree
+        - red nodes cannot have red children or a red parent
         These extra requirements combined together form what is called:
         the red black tree invariant
 
@@ -63,6 +63,7 @@ private: // even the constructors are private since this class should only be us
     static RBNode* moveRedRight(RBNode *h);
 
     // main operations:
+    // these functions use recursion in order to traverse the entire tree
     static RBNode* insert(RBNode *h, Record *data);
     static RBNode* erase(RBNode *h, Record *data);
     static RBNode* eraseMin(RBNode *h);

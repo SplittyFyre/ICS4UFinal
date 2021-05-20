@@ -1,6 +1,7 @@
 #include "Customer.h"
 
 // compare by name first, if names are the same, break ties using phone number, no customer can have the same name AND phone#
+// return -1 if less than, 0 if equal, 1 if greater than
 int Customer::compare(const Record *that) const {
     const Customer *c = dynamic_cast<const Customer*>(that);
     if (name < c->name) return -1;
