@@ -26,7 +26,7 @@
     <property name="currentIndex">
      <number>0</number>
     </property>
-    <widget class="QWidget" name="tab_1">
+    <widget class="QWidget" name="flightstab">
      <attribute name="title">
       <string>Flights</string>
      </attribute>
@@ -218,7 +218,7 @@
       </layout>
      </widget>
     </widget>
-    <widget class="QWidget" name="tab_2">
+    <widget class="QWidget" name="customerstab">
      <attribute name="title">
       <string>Customers</string>
      </attribute>

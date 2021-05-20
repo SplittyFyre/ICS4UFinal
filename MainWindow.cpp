@@ -1,5 +1,9 @@
 #include "MainWindow.h"
-#include "ui_mainwindow.h"
+
+// this file does not exist in the folder i sent you
+// because Qt auto-generates it during the build process
+// it contains internal Qt functions and data
+#include "ui_MainWindow.h"
 
 #include <QComboBox>
 #include <QMessageBox>
