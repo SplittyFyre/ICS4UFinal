@@ -29,19 +29,28 @@ private: // even the constructors are private since this class should only be us
 
     /*
         Red Black trees are a special type of binary search tree (bst for short)
-        firstly, red black trees must meet the requirements of a BST, which are:
+        Firstly, red black trees must meet the requirements of a BST, which are:
         - each node has at most two children (a left child and a right child)
-        - nodes smaller than x must be in x's left subtree, and nodes larger than x must be in x's right subtree
-        in addition, the red black tree has extra requirements, which are:
+        - all nodes smaller than x must be in x's left subtree, and all nodes larger than x must be in x's right subtree
+
+        These requirements allow us to search for a value in the tree by:
+        traversing into a node's left subtree if the target value is less than the node's value
+        traversing into a node's right subtree if the target value is greater than the node's value
+        otherwise the target value is found at the current node
+
+        In addition, the red black tree has extra requirements, which are:
         - each node is coloured either red or black
         - the root node is always black
         - every path from the root to any leaf node must contain the same number of black nodes
         - no two red nodes can be adjacent in the tree
-        all of these requirements combined together form what is called:
+        These extra requirements combined together form what is called:
         the red black tree invariant
-        the invariant guarantees that the tree will be balanced, which means that insertion, deletion, and searching
-        can all be done in O(log n) complexity
-        however, modification operations can often break the invariant, which means that after each modification,
+
+        The invariant keeps the tree mostly balanced, which means that operations such as insertion, deletion, and finding
+        can all be done in O(log N) time complexity, where N is the number of nodes in the tree.
+        This is a big improvement over normal BSTs, which have worst-cae complexities of O(N)
+
+        However, modification operations can often break the invariant, which means that after each modification,
         we must check if the invariant has been violated, and restore the invariant if needed
     */
 

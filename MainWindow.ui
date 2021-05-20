@@ -274,7 +274,7 @@
        <item>
         <widget class="QLineEdit" name="addCustomerName">
          <property name="maxLength">
-          <number>32</number>
+          <number>64</number>
          </property>
          <property name="placeholderText">
           <string>Customer Name</string>
@@ -284,7 +284,7 @@
        <item>
         <widget class="QLineEdit" name="addCustomerAddress">
          <property name="maxLength">
-          <number>32</number>
+          <number>64</number>
          </property>
          <property name="placeholderText">
           <string>Customer Address</string>
@@ -330,7 +330,7 @@
         <x>420</x>
         <y>10</y>
         <width>311</width>
-        <height>141</height>
+        <height>145</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -344,7 +344,7 @@
        <item>
         <widget class="QLineEdit" name="findCustomerName">
          <property name="maxLength">
-          <number>32</number>
+          <number>64</number>
          </property>
          <property name="placeholderText">
           <string>Customer Name</string>

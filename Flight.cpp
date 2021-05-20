@@ -17,7 +17,7 @@ Flight& Flight::operator=(const Flight &rhs) {
     delete[] seats; // works even if its already null
     seats = nullptr;
 
-    if (rhs.seats != nullptr) { // they actually initialized their stuff
+    if (rhs.seats != nullptr) { // rhs actually has seat data
         seats = new Customer*[size];
         memcpy(seats, rhs.seats, sizeof(Customer*) * size);
     }

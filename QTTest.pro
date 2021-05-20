@@ -12,22 +12,22 @@ SOURCES += \
     Customer.cpp \
     EasySaveLoad.cpp \
     Flight.cpp \
+    MainWindow.cpp \
     RBNode.cpp \
     RBTree.cpp \
-    main.cpp \
-    mainwindow.cpp
+    main.cpp
 
 HEADERS += \
     Customer.h \
     EasySaveLoad.h \
     Flight.h \
+    MainWindow.h \
     RBNode.h \
     RBTree.h \
-    Record.h \
-    mainwindow.h
+    Record.h
 
 FORMS += \
-    mainwindow.ui
+    MainWindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
